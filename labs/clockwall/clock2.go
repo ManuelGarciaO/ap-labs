@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"net"
+	"os"
 	"time"
 )
 
@@ -20,16 +21,16 @@ func handleConn(c net.Conn) {
 }
 
 func main() {
-	listener, err := net.Listen("tcp", "localhost:9090")
+	listener, err := net.Listen("tcp", "localhost:"+os.Args[2])
 	if err != nil {
 		log.Fatal(err)
 	}
 	for {
 		conn, err := listener.Accept()
 		if err != nil {
-			log.Print(err) // e.g., connection aborted
+			log.Print(err) 
 			continue
 		}
-		go handleConn(conn) // handle connections concurrently
+		go handleConn(conn) 
 	}
 }
