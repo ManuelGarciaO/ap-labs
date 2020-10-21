@@ -11,11 +11,17 @@ import (
 	"log"
 	"net"
 	"os"
+	"flag"
+	"fmt"
 )
 
 //!+
 func main() {
-	conn, err := net.Dial("tcp", "localhost:8000")
+	user := flag.String ("user","user","name")
+	server := flag.String ("server","localhost:8000","host and port")
+	flag.Parse()
+
+	conn, err := net.Dial("tcp", *server)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -25,6 +31,9 @@ func main() {
 		log.Println("done")
 		done <- struct{}{} // signal the main goroutine
 	}()
+
+	fmt.Fprint(conn, *user)
+
 	mustCopy(conn, os.Stdin)
 	conn.Close()
 	<-done // wait for background goroutine to finish
