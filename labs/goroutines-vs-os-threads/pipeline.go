@@ -20,8 +20,8 @@ func main() {
 			for ; maxStages > 0; maxStages-- {
 				pipe <- maxStages
 			}
-			duration := time.Since(initialTime)
-			fmt.Println("Time to transit trough the pipeline : ", duration)
+			transitTime := time.Since(initialTime)
+			fmt.Println("Time to transit trough the pipeline : ", transitTime)
 		}
 
 	}()
