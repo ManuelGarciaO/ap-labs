@@ -32,7 +32,6 @@ type url_depth struct {
 var tokens = make(chan struct{}, 20)
 
 func crawl(url string,file *os.File) []string {
-	//fmt.Println(url)
 	fmt.Fprintln(file,url)
 	tokens <- struct{}{} // acquire a token
 	list, err := links.Extract(url)
